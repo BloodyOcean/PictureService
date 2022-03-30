@@ -11,6 +11,7 @@ import (
 
 func FileUpload() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		//upload
 		formFile, _, err := c.Request.FormFile("file")
 		if err != nil {

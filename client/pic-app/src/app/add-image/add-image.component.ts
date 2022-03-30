@@ -1,16 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+import { ImageService } from '../shared/image.service';
 
 @Component({
   selector: 'app-add-image',
   templateUrl: './add-image.component.html',
   styles: [
+    'button {margin-top: 10px;}'
   ]
 })
 export class AddImageComponent implements OnInit {
 
-  constructor() { }
+  selected_file: any = null;
+
+  constructor(public service: ImageService) { }
 
   ngOnInit(): void {
   }
 
+  onFileSelected(event: any) {
+    console.log(event);
+    this.selected_file = <File>event.target.files[0];
+  }
+
+  onUpload() {
+    const formData = new FormData();
+    formData.append('file', this.selected_file, this.selected_file.name);
+    console.log(formData)
+    this.service.addImage(formData)
+      .subscribe(res => {
+        console.log(res); 
+      });
+  }
 }
