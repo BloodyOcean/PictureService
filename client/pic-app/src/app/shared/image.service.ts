@@ -10,7 +10,7 @@ export class ImageService {
 
   constructor(private http: HttpClient) { }
 
-  addImage(val: any) {
+  addImage(val: FormData) {
     return this.http.post(this.BaseURI + '/file', val);
   }
 

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"picture-service/dtos"
 	"picture-service/models"
@@ -12,8 +13,13 @@ import (
 func FileUpload() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		//upload
+		// Upload.
 		formFile, _, err := c.Request.FormFile("image")
+
+		// Get values from FOrmData.
+		fmt.Println(c.Request.FormValue("title"))
+		fmt.Println(c.Request.FormValue("description"))
+
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,

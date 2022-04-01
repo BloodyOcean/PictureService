@@ -19,6 +19,8 @@ export class AddImageComponent implements OnInit {
 
   selected_file: any = null;
   selected_url: string = '';
+  title: string = '';
+  description: string = '';
 
   constructor(public service: ImageService) { }
 
@@ -32,6 +34,8 @@ export class AddImageComponent implements OnInit {
   onUpload() {
     const formData = new FormData();
     formData.append('image', this.selected_file, this.selected_file.name);
+    formData.append('title', this.title);
+    formData.append('description', this.description);
     this.service.addImage(formData)
       .subscribe(res => {
         console.log(res);

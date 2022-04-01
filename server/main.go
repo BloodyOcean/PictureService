@@ -23,6 +23,7 @@ func CORSMiddleware() gin.HandlerFunc {
 }
 
 func main() {
+
 	router := gin.Default()
 
 	router.Use(CORSMiddleware())
