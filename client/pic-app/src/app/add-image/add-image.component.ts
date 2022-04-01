@@ -10,7 +10,15 @@ import { ImageService } from '../shared/image.service';
 })
 export class AddImageComponent implements OnInit {
 
+  loadTypes = [
+    { id: 1, name: "URL" },
+    { id: 2, name: "File" }
+  ];
+
+  selectedValue: any = null;
+
   selected_file: any = null;
+  selected_url: string = '';
 
   constructor(public service: ImageService) { }
 
@@ -26,7 +34,7 @@ export class AddImageComponent implements OnInit {
     formData.append('image', this.selected_file, this.selected_file.name);
     this.service.addImage(formData)
       .subscribe(res => {
-        console.log(res); 
+        console.log(res);
       });
   }
 }
