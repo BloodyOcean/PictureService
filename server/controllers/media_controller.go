@@ -13,7 +13,7 @@ func FileUpload() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		//upload
-		formFile, _, err := c.Request.FormFile("file")
+		formFile, _, err := c.Request.FormFile("image")
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
