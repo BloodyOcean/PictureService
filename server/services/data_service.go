@@ -7,7 +7,17 @@ import (
 	"gorm.io/gorm"
 )
 
-func InitDb() *gorm.DB {
+type DbManager interface {
+	AddPublication(item *models.Publication)
+}
+
+type manager struct {
+	db *gorm.DB
+}
+
+var Mgr manager
+
+func init() {
 	db, err := gorm.Open(sqlite.Open("imagesdb.db"), &gorm.Config{})
 
 	if err != nil {
@@ -17,9 +27,9 @@ func InitDb() *gorm.DB {
 	// Migrate the schemas
 	_ = db.AutoMigrate(&models.Publication{})
 
-	return db
+	Mgr = manager{db: db}
 }
 
-func AddPublication(db *gorm.DB, item models.Publication) {
-	db.Create(item)
+func (mgr *manager) AddPublication(item *models.Publication) {
+	mgr.db.Create(item)
 }

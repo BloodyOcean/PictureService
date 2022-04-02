@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"picture-service/dtos"
 	"picture-service/models"
@@ -16,10 +15,6 @@ func FileUpload() gin.HandlerFunc {
 		// Upload.
 		formFile, _, err := c.Request.FormFile("image")
 
-		// Get values from FOrmData.
-		fmt.Println(c.Request.FormValue("title"))
-		fmt.Println(c.Request.FormValue("description"))
-
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -32,6 +27,13 @@ func FileUpload() gin.HandlerFunc {
 		}
 
 		uploadUrl, err := services.NewMediaUpload().FileUpload(models.File{File: formFile})
+
+		// Get values from Data Form.
+		title := c.Request.FormValue("title")
+		description := c.Request.FormValue("description")
+
+		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: title, Description: description})
+
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -48,7 +50,7 @@ func FileUpload() gin.HandlerFunc {
 			dtos.MediaDto{
 				StatusCode: http.StatusOK,
 				Message:    "success",
-				Data:       map[string]interface{}{"data": uploadUrl},
+				Data:       map[string]interface{}{"data": uploadUrl, "title": title, "description": description},
 			})
 	}
 }
