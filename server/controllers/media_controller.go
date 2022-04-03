@@ -28,12 +28,6 @@ func FileUpload() gin.HandlerFunc {
 
 		uploadUrl, err := services.NewMediaUpload().FileUpload(models.File{File: formFile})
 
-		// Get values from Data Form.
-		title := c.Request.FormValue("title")
-		description := c.Request.FormValue("description")
-
-		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: title, Description: description})
-
 		if err != nil {
 			c.JSON(
 				http.StatusInternalServerError,
@@ -44,6 +38,12 @@ func FileUpload() gin.HandlerFunc {
 				})
 			return
 		}
+
+		// Get values from Data Form.
+		title := c.Request.FormValue("title")
+		description := c.Request.FormValue("description")
+
+		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: title, Description: description})
 
 		c.JSON(
 			http.StatusOK,
@@ -82,6 +82,8 @@ func RemoteUpload() gin.HandlerFunc {
 				})
 			return
 		}
+
+		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: url.Title, Description: url.Description})
 
 		c.JSON(
 			http.StatusOK,

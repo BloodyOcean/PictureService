@@ -11,7 +11,9 @@ type File struct {
 }
 
 type Url struct {
-	Url string `json:"url,omitempty" validate:"required"`
+	Url         string `json:"url,omitempty" validate:"required"`
+	Title       string `json:"title,omitempty" validate:"required"`
+	Description string `json:"description,omitempty" validate:"required"`
 }
 
 type Publication struct {

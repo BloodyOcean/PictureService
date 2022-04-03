@@ -13,8 +13,4 @@ export class ImageService {
   addImage(val: FormData) {
     return this.http.post(this.BaseURI + '/file', val);
   }
-
-  getAlbums() {
-    return this.http.get(this.BaseURI + '/albums');
-  }
 }
