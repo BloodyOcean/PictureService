@@ -13,4 +13,8 @@ export class ImageService {
   addImage(val: FormData) {
     return this.http.post(this.BaseURI + '/file', val);
   }
+
+  addUrl(val: any) {
+    return this.http.post(this.BaseURI + '/remote', val);
+  }
 }

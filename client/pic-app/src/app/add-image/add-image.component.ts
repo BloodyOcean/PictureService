@@ -32,13 +32,27 @@ export class AddImageComponent implements OnInit {
   }
 
   onUpload() {
-    const formData = new FormData();
-    formData.append('image', this.selected_file, this.selected_file.name);
-    formData.append('title', this.title);
-    formData.append('description', this.description);
-    this.service.addImage(formData)
-      .subscribe(res => {
-        console.log(res);
-      });
+    if (this.selectedValue == 1) {
+      var element = {
+        url: this.selected_url,
+        title: this.title,
+        description: this.description
+      }
+
+      this.service.addUrl(element)
+        .subscribe(res => {
+          console.log(res);
+        })
+
+    } else {
+      const formData = new FormData();
+      formData.append('image', this.selected_file, this.selected_file.name);
+      formData.append('title', this.title);
+      formData.append('description', this.description);
+      this.service.addImage(formData)
+        .subscribe(res => {
+          console.log(res);
+        });
+    }
   }
 }
