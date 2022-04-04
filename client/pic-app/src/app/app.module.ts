@@ -9,6 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { AddImageComponent } from './add-image/add-image.component';
 import { ShowImageComponent } from './show-image/show-image.component';
 import { ImageService } from './shared/image.service';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ImageService } from './shared/image.service';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [ImageService],
   bootstrap: [AppComponent]

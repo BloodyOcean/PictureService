@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../shared/image.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-image',
@@ -22,7 +23,7 @@ export class AddImageComponent implements OnInit {
   title: string = '';
   description: string = '';
 
-  constructor(public service: ImageService) { }
+  constructor(public service: ImageService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -42,7 +43,12 @@ export class AddImageComponent implements OnInit {
       this.service.addUrl(element)
         .subscribe(res => {
           console.log(res);
-        })
+          this.toastr.success("Uploaded successfully", "Success");
+        },
+          error => {
+            this.toastr.error("Cant upload file", "Error");
+          }
+        );
 
     } else {
       const formData = new FormData();
@@ -52,7 +58,12 @@ export class AddImageComponent implements OnInit {
       this.service.addImage(formData)
         .subscribe(res => {
           console.log(res);
-        });
+          this.toastr.success("Uploaded successfully", "Success");
+        },
+          error => {
+            this.toastr.error("Cant upload file", "Error");
+          }
+        );
     }
   }
 }
