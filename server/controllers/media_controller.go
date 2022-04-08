@@ -9,6 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetImages() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		res := services.Mgr.GetPublication()
+
+		c.JSON(
+			http.StatusOK,
+			res)
+	}
+}
+
 func FileUpload() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

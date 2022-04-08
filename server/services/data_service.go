@@ -33,3 +33,9 @@ func init() {
 func (mgr *manager) AddPublication(item *models.Publication) {
 	mgr.db.Create(item)
 }
+
+func (mgr *manager) GetPublication() []models.Publication {
+	var images []models.Publication
+	mgr.db.Find(&images)
+	return images
+}
