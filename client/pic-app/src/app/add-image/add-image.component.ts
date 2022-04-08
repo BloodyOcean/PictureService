@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../shared/image.service';
 import { ToastrService } from 'ngx-toastr';
 
+declare var $: any;
+
 @Component({
   selector: 'app-add-image',
   templateUrl: './add-image.component.html',
@@ -32,7 +34,12 @@ export class AddImageComponent implements OnInit {
     this.selected_file = <File>event.target.files[0];
   }
 
+  openModal(event: any) {
+    $('.modal').modal('show');
+  }
+
   onUpload() {
+
     if (this.selectedValue == 1) {
       var element = {
         url: this.selected_url,
@@ -44,6 +51,9 @@ export class AddImageComponent implements OnInit {
         .subscribe(res => {
           console.log(res);
           this.toastr.success("Uploaded successfully", "Success");
+
+          $('.modal').modal('hide');
+          this.selectedValue = null;
         },
           error => {
             this.toastr.error("Cant upload file", "Error");
@@ -52,6 +62,15 @@ export class AddImageComponent implements OnInit {
 
     } else {
       const formData = new FormData();
+
+      if (this.selected_file == null) {
+        this.toastr.error("Cant upload file", "Error");
+        $('.modal').modal('hide');
+          this.selectedValue = null;
+
+          return;
+      }
+
       formData.append('image', this.selected_file, this.selected_file.name);
       formData.append('title', this.title);
       formData.append('description', this.description);
@@ -59,11 +78,16 @@ export class AddImageComponent implements OnInit {
         .subscribe(res => {
           console.log(res);
           this.toastr.success("Uploaded successfully", "Success");
+
+          $('.modal').modal('hide');
+          this.selectedValue = null;
         },
           error => {
             this.toastr.error("Cant upload file", "Error");
           }
         );
     }
+
+
   }
 }
