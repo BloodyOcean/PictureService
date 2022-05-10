@@ -17,4 +17,8 @@ export class ImageService {
   addUrl(val: any) {
     return this.http.post(this.BaseURI + '/remote', val);
   }
+
+  findMatches(val: any) {
+    return this.http.get(this.BaseURI + '/find/' + val);
+  }
 }

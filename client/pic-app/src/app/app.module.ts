@@ -11,13 +11,15 @@ import { ShowImageComponent } from './show-image/show-image.component';
 import { ImageService } from './shared/image.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ImagePostComponent } from './image-post/image-post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AddImageComponent,
-    ShowImageComponent
+    ShowImageComponent,
+    ImagePostComponent
   ],
   imports: [
     BrowserModule,
