@@ -32,5 +32,7 @@ func main() {
 	router.POST("/remote", controllers.RemoteUpload())
 	router.GET("/image", controllers.GetImages())
 
+	router.GET("/find/:name", controllers.GetSimilarPosts())
+
 	router.Run("localhost:5000")
 }
