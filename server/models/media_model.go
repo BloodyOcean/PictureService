@@ -21,4 +21,5 @@ type Publication struct {
 	Url         string
 	Title       string
 	Description string
+	UserID      uint
 }
