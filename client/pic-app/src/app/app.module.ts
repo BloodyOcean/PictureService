@@ -12,6 +12,10 @@ import { ImageService } from './shared/image.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ImagePostComponent } from './image-post/image-post.component';
+import { UserComponent } from './user/user.component';
+import { LoginComponent } from './user/login/login.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+import { UserService } from './shared/user.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,10 @@ import { ImagePostComponent } from './image-post/image-post.component';
     HomeComponent,
     AddImageComponent,
     ShowImageComponent,
-    ImagePostComponent
+    ImagePostComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,7 @@ import { ImagePostComponent } from './image-post/image-post.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [ImageService],
+  providers: [ImageService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
