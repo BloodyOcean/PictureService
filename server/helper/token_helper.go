@@ -59,6 +59,8 @@ func ExtractTokenID(r *http.Request) (uint64, error) {
 
 	tokenString := ExtractToken(r)
 
+	fmt.Println(tokenString)
+
 	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			fmt.Println("token1")

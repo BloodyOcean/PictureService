@@ -10,9 +10,10 @@ export class DownloadComponent implements OnInit {
 
   constructor(private service: ImageService) { }
 
-  arr: any[];
+  arr: any;
 
   ngOnInit(): void {
+    this.service.getMyImages().subscribe(res => {console.log(res); this.arr = res;});
     
   }
 
