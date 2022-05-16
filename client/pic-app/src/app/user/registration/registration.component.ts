@@ -24,7 +24,7 @@ export class RegistrationComponent implements OnInit {
         this.toastr.success('New user created!', 'Registration successful.');
       },
       error: () => {
-        this.toastr.error('Username is already taken', 'Registration failed.');
+        this.toastr.error('Something went wrong!', 'Registration failed.');
       }
     });
   }

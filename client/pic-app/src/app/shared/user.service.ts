@@ -10,10 +10,11 @@ import { UserModel } from '../models/user.model';
 })
 export class UserService {
   readonly BaseURI = 'http://localhost:5000';
-  user: UserModel;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router:Router, private toastr:ToastrService) {
-   }
+  user: UserModel
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private toastr: ToastrService) {
+  }
 
   formModel = this.fb.group({
     Email: ['', [Validators.email, Validators.required]],
@@ -34,8 +35,8 @@ export class UserService {
     return this.http.post(this.BaseURI + '/auth/register', body);
   }
 
-  login(formData:any) {
-    return this.http.post(this.BaseURI + '/accounts/logon', formData, { responseType: 'text' }).subscribe(
+  login(formData: any) {
+    return this.http.post(this.BaseURI + '/auth/login', formData, { responseType: 'text' }).subscribe(
       response => {
         localStorage.setItem('token', response);
         this.user = this.getUser(response);
@@ -43,7 +44,7 @@ export class UserService {
       },
       (error: HttpErrorResponse) => {
         this.toastr.error('Invalid password or email', 'Error');
-      });;
+      });
   }
 
   public getUser(token: string): UserModel {
