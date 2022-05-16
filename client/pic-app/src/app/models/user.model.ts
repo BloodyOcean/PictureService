@@ -1,6 +1,6 @@
 export class UserModel {
 
-    constructor(public email:string) {
+    constructor(public id:number) {
         
     }
 }

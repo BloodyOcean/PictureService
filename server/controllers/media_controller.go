@@ -5,6 +5,7 @@ import (
 	"picture-service/dtos"
 	"picture-service/models"
 	"picture-service/services"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -54,7 +55,9 @@ func FileUpload() gin.HandlerFunc {
 		title := c.Request.FormValue("title")
 		description := c.Request.FormValue("description")
 
-		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: title, Description: description})
+		uid, _ := strconv.ParseUint(c.Request.FormValue("user_id"), 10, 32)
+
+		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: title, Description: description, UserID: uid})
 
 		c.JSON(
 			http.StatusOK,
@@ -94,7 +97,7 @@ func RemoteUpload() gin.HandlerFunc {
 			return
 		}
 
-		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: url.Title, Description: url.Description})
+		services.Mgr.AddPublication(&models.Publication{Url: uploadUrl, Title: url.Title, Description: url.Description, UserID: url.UserID})
 
 		c.JSON(
 			http.StatusOK,

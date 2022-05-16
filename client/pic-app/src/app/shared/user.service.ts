@@ -38,7 +38,8 @@ export class UserService {
   login(formData: any) {
     return this.http.post(this.BaseURI + '/auth/login', formData, { responseType: 'text' }).subscribe(
       response => {
-        localStorage.setItem('token', response);
+        console.log(JSON.parse(response).data)
+        localStorage.setItem('token', JSON.parse(response).data);
         this.user = this.getUser(response);
         this.router.navigateByUrl('/home');
       },
@@ -48,7 +49,8 @@ export class UserService {
   }
 
   public getUser(token: string): UserModel {
-    let b = JSON.parse(atob(token.split('.')[1]))["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]
+    let b = JSON.parse(atob(token.split('.')[1])).user_id;
+    console.log(b);
     return new UserModel(b);
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/shared/user.service';
 
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/shared/user.service';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(public service: UserService, private toastr: ToastrService) {
+  constructor(public service: UserService, private toastr: ToastrService, private router: Router,) {
     this.service.formModel.reset();
   }
 
@@ -22,6 +23,7 @@ export class RegistrationComponent implements OnInit {
       complete: () => {
         this.service.formModel.reset();
         this.toastr.success('New user created!', 'Registration successful.');
+        this.router.navigateByUrl('/user/login');
       },
       error: () => {
         this.toastr.error('Something went wrong!', 'Registration failed.');

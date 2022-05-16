@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageService } from '../shared/image.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../shared/user.service';
 
 declare var $: any;
 
@@ -25,7 +26,7 @@ export class AddImageComponent implements OnInit {
   title: string = '';
   description: string = '';
 
-  constructor(public service: ImageService, private toastr: ToastrService) { }
+  constructor(public service: ImageService, private toastr: ToastrService, public userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -40,8 +41,17 @@ export class AddImageComponent implements OnInit {
 
   onUpload() {
 
+    var tkn = localStorage.getItem('token');
+      var res:string;
+      if (tkn == null) {
+        res = "";
+      } else {
+        res = tkn;
+      }
+
     if (this.selectedValue == 1) {
       var element = {
+        user_id: this.userService.getUser(res).id,
         url: this.selected_url,
         title: this.title,
         description: this.description
@@ -74,6 +84,7 @@ export class AddImageComponent implements OnInit {
       formData.append('image', this.selected_file, this.selected_file.name);
       formData.append('title', this.title);
       formData.append('description', this.description);
+      formData.append('user_id', this.userService.getUser(res).id.toString());
       this.service.addImage(formData)
         .subscribe(res => {
           console.log(res);
