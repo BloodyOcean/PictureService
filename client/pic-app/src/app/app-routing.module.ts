@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './account/account.component';
 import { AddImageComponent } from './add-image/add-image.component';
 import { AuthGuard } from './auth/auth.guard';
 import { DownloadComponent } from './download/download.component';
@@ -29,7 +30,8 @@ const routes: Routes = [
     children: [
       { path: 'add', component: AddImageComponent },
       { path: 'images', component: ShowImageComponent },
-      { path: 'downloads', component: DownloadComponent }
+      { path: 'downloads', component: DownloadComponent },
+      { path: 'account', component: AccountComponent }
     ],
     canActivate: [AuthGuard]
   }

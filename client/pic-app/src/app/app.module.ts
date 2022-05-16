@@ -18,6 +18,8 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { UserService } from './shared/user.service';
 import { DownloadComponent } from './download/download.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { MatIconModule} from '@angular/material/icon';
+import { AccountComponent } from './account/account.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     UserComponent,
     LoginComponent,
     RegistrationComponent,
-    DownloadComponent
+    DownloadComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatIconModule,
     ToastrModule.forRoot()
   ],
   providers: [ImageService, UserService, {
