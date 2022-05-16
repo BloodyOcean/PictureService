@@ -21,4 +21,8 @@ export class ImageService {
   findMatches(val: any) {
     return this.http.get(this.BaseURI + '/find/' + val);
   }
+
+  getMyImages() {
+    return this.http.get(this.BaseURI + '/user/image');
+  }
 }

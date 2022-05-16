@@ -41,6 +41,12 @@ func (mgr *manager) GetPublication() []models.Publication {
 	return images
 }
 
+func (mgr *manager) GetConcretePublications(id uint64) []models.Publication {
+	var images []models.Publication
+	mgr.db.Where("user_id = ?", id).Find(&images)
+	return images
+}
+
 func (mgr *manager) CreateUser(user dtos.RegisterDTO) models.User {
 	userToCreate := models.User{Nickname: user.Name, Email: user.Email, Password: user.Password}
 

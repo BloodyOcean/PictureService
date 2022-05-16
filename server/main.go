@@ -32,6 +32,7 @@ func main() {
 	router.POST("/remote", controllers.RemoteUpload())
 	router.GET("/image", controllers.GetImages())
 	router.GET("/find/:name", controllers.GetSimilarPosts())
+	router.GET("/user/image", controllers.GetAllConcretePublications())
 
 	authRoutes := router.Group("auth")
 	{

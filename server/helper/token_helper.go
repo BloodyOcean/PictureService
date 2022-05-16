@@ -41,7 +41,9 @@ func TokenValid(r *http.Request) error {
 
 func ExtractToken(r *http.Request) string {
 	keys := r.URL.Query()
+
 	token := keys.Get("token")
+
 	if token != "" {
 		return token
 	}
@@ -49,30 +51,28 @@ func ExtractToken(r *http.Request) string {
 	if len(strings.Split(bearerToken, " ")) == 2 {
 		return strings.Split(bearerToken, " ")[1]
 	}
+
 	return ""
 }
 
-func ExtractTokenID(r *http.Request) (uint32, error) {
+func ExtractTokenID(r *http.Request) (uint64, error) {
 
 	tokenString := ExtractToken(r)
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			fmt.Println("token1")
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
+
 		return []byte(os.Getenv("API_SECRET")), nil
 	})
-	if err != nil {
-		return 0, err
-	}
-	claims, ok := token.Claims.(jwt.MapClaims)
-	if ok && token.Valid {
-		uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
-		if err != nil {
-			return 0, err
-		}
-		return uint32(uid), nil
-	}
-	return 0, nil
+
+	claims, _ := token.Claims.(jwt.MapClaims)
+
+	uid, _ := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
+
+	return uid, nil
 }
 
 //Pretty display the claims licely in the terminal

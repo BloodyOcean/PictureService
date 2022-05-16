@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"picture-service/helper"
 	"picture-service/models"
@@ -15,10 +16,8 @@ func GetSimilarPosts() gin.HandlerFunc {
 		arr := services.Mgr.GetPublication()
 		var filtered_arr []models.Publication
 		name := []rune(c.Param("name"))
-		// var res []int
 
 		for _, s := range arr {
-			// res = append(res, helper.Levenshtein(name, []rune(s.Title)))
 			if helper.Levenshtein(name, []rune(s.Title)) <= 3 {
 				filtered_arr = append(filtered_arr, s)
 			}
@@ -27,5 +26,20 @@ func GetSimilarPosts() gin.HandlerFunc {
 		c.JSON(
 			http.StatusOK,
 			filtered_arr)
+	}
+}
+
+func GetAllConcretePublications() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		uid, _ := helper.ExtractTokenID(c.Request)
+
+		fmt.Println(uid)
+
+		arr := services.Mgr.GetConcretePublications(uid)
+
+		c.JSON(
+			http.StatusOK,
+			arr)
 	}
 }
