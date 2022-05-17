@@ -29,6 +29,20 @@ func GetSimilarPosts() gin.HandlerFunc {
 	}
 }
 
+func UpdateUserInfo() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var user models.User
+		_ = c.BindJSON(&user)
+		res := services.Mgr.UpdateUser(user)
+
+		c.JSON(
+			http.StatusOK,
+			res)
+
+	}
+
+}
+
 func GetAllConcretePublications() gin.HandlerFunc {
 	return func(c *gin.Context) {
 

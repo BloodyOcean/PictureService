@@ -33,6 +33,7 @@ func main() {
 	router.GET("/image", controllers.GetImages())
 	router.GET("/find/:name", controllers.GetSimilarPosts())
 	router.GET("/user/image", controllers.GetAllConcretePublications())
+	router.PUT("/user", controllers.UpdateUserInfo())
 
 	authRoutes := router.Group("auth")
 	{

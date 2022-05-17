@@ -2,6 +2,7 @@ package services
 
 import (
 	"picture-service/dtos"
+	"picture-service/helper"
 	"picture-service/models"
 
 	"gorm.io/driver/sqlite"
@@ -41,6 +42,13 @@ func (mgr *manager) GetPublication() []models.Publication {
 	return images
 }
 
+func (mgr *manager) GetUserByID(id uint) models.User {
+	var user models.User
+	user.ID = id
+	mgr.db.Find(&user)
+	return user
+}
+
 func (mgr *manager) GetConcretePublications(id uint64) []models.Publication {
 	var images []models.Publication
 	mgr.db.Where("user_id = ?", id).Find(&images)
@@ -58,6 +66,22 @@ func (mgr *manager) CreateUser(user dtos.RegisterDTO) models.User {
 func (mgr *manager) FindUser(email string) models.User {
 	tmp := models.User{}
 	mgr.db.First(&tmp, "email = ?", email)
+
+	return tmp
+}
+
+func (mgr *manager) UpdateUser(user models.User) models.User {
+	tmp := user
+	mgr.db.First(&tmp)
+
+	tmp.Email = user.Email
+	tmp.Nickname = user.Nickname
+	res, _ := helper.HashPassword(user.Password)
+	if len(user.Password) >= 5 {
+		tmp.Password = res
+	}
+
+	mgr.db.Save(&tmp)
 
 	return tmp
 }

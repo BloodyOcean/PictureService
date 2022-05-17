@@ -35,6 +35,11 @@ export class UserService {
     return this.http.post(this.BaseURI + '/auth/register', body);
   }
 
+  
+  updateUserInfo(val: any) {
+    return this.http.put(this.BaseURI + '/user', val);
+  }
+
   login(formData: any) {
     return this.http.post(this.BaseURI + '/auth/login', formData, { responseType: 'text' }).subscribe(
       response => {
@@ -49,8 +54,11 @@ export class UserService {
   }
 
   public getUser(token: string): UserModel {
-    let b = JSON.parse(atob(token.split('.')[1])).user_id;
-    console.log(b);
-    return new UserModel(b);
+    let uid = JSON.parse(atob(token.split('.')[1])).user_id;
+    let uname = JSON.parse(atob(token.split('.')[1])).nickname;
+    let uemail = JSON.parse(atob(token.split('.')[1])).email;
+    var u = new UserModel(uid, uemail, uname);
+    console.log(u);
+    return u;
   }
 }

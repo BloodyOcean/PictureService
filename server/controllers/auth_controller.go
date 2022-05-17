@@ -23,7 +23,7 @@ func CreateUser(ctx *gin.Context) {
 	registerDTO.Password, _ = helper.HashPassword(registerDTO.Password)
 
 	createdUser := services.Mgr.CreateUser(registerDTO)
-	token, _ := helper.CreateToken(uint32(createdUser.ID))
+	token, _ := helper.CreateToken(createdUser)
 	response := helper.BuildResponse(true, "OK!", token)
 	ctx.JSON(http.StatusCreated, response)
 }
@@ -40,7 +40,7 @@ func Login(ctx *gin.Context) {
 	u := services.Mgr.FindUser(loginDTO.Email)
 
 	if helper.CheckPasswordHash(loginDTO.Password, u.Password) {
-		generatedToken, _ := helper.CreateToken(uint32(u.ID))
+		generatedToken, _ := helper.CreateToken(u)
 
 		response := helper.BuildResponse(true, "OK!", generatedToken)
 		ctx.JSON(http.StatusOK, response)
